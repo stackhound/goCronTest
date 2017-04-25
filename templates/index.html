@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Stackhound</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+
+    <link rel="stylesheet" href="https://lchza.000webhostapp.com/stackhound/css/style.css">
+    <!--link rel="stylesheet" href="css/style.css"-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+
+</head>
+
+<body>
+
+    <h1 class="demo-title">Stackhound</h1>
+    <div class="test-table">
+        <div class="test-option">
+            <h1>Hourly</h1>
+            <hr />
+            <p>This represents how many times a function was called every 1 hour.</p>
+            <hr />
+            <div class="times">
+                <div class="front">
+                    <span class="times">{{.Hourly}}</span>
+                    <b>Times</b>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-option">
+            <h1>Every 8hrs</h1>
+            <hr />
+            <p>This represents how many times a function was called every 8 hours.</p>
+
+            <hr />
+            <div class="times">
+                <div class="front">
+                    <span class="times">{{.Eight}}</span>
+                    <b>Times</b>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-option">
+            <h1>Daily</h1>
+            <hr />
+            <p>This represents how many times a function was called every 1 day.</p>
+
+            <hr />
+            <div class="times">
+                <div class="front">
+                    <span class="times">{{.Daily}}</span>
+                    <b>Times</b>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-option">
+            <h1>Every 1st</h1>
+            <hr />
+            <p>This represents how many times a function was called the first day of every month.</p>
+
+            <hr />
+            <div class="times">
+                <div class="front">
+                    <span class="times">{{.First}} </span>
+                    <b>Times</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    </br>
+    </br>
+    <h3 class="demo-subtitle">Local server time is: {{.Local}}</h3>
+    <h3 class="demo-subtitle">Next call is expected at: {{.Next}}</h3>
+</body>
+
+</html>
