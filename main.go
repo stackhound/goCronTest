@@ -13,12 +13,12 @@ import (
 
 //Data asdsadas
 type Data struct {
-	Hourly int64
-	Eight  int64
-	Daily  int64
-	First  int64
-	Next   time.Time
-	Local  time.Time
+	Five  int64
+	Eight int64
+	Daily int64
+	First int64
+	Next  time.Time
+	Local time.Time
 }
 
 //Datos a exportar
@@ -27,7 +27,7 @@ var Datos Data
 func updateF() {
 	currentTime := time.Now().Local()
 	log.Println("Its one more hour, The Current time is ", currentTime.Format("02-01-2006"))
-	Datos.Hourly++
+	Datos.Five++
 }
 func updateE() {
 	Datos.Eight++
@@ -59,19 +59,19 @@ func ServeHTTP(c *gin.Context) {
 
 	Datos.Local = time.Now().Local()
 	items := struct {
-		Hourly string
-		Eight  string
-		Daily  string
-		First  string
-		Next   time.Time
-		Local  time.Time
+		Five  string
+		Eight string
+		Daily string
+		First string
+		Next  time.Time
+		Local time.Time
 	}{
-		Hourly: strconv.FormatInt(Datos.Hourly, 10),
-		Eight:  strconv.FormatInt(Datos.Eight, 10),
-		Daily:  strconv.FormatInt(Datos.Daily, 10),
-		First:  strconv.FormatInt(Datos.First, 10),
-		Next:   Datos.Next,
-		Local:  Datos.Local,
+		Five:  strconv.FormatInt(Datos.Five, 10),
+		Eight: strconv.FormatInt(Datos.Eight, 10),
+		Daily: strconv.FormatInt(Datos.Daily, 10),
+		First: strconv.FormatInt(Datos.First, 10),
+		Next:  Datos.Next,
+		Local: Datos.Local,
 	}
 
 	err = t.ExecuteTemplate(w, "index.html", items)
