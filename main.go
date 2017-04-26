@@ -13,12 +13,12 @@ import (
 
 //Data asdsadas
 type Data struct {
-	Five  int64
-	Eight int64
-	Daily int64
-	First int64
-	Next  time.Time
-	Local time.Time
+	Five   int64
+	Hourly int64
+	Daily  int64
+	First  int64
+	Next   time.Time
+	Local  time.Time
 }
 
 //Datos a exportar
@@ -29,8 +29,8 @@ func updateF() {
 	log.Println("Its one more hour, The Current time is ", currentTime.Format("02-01-2006"))
 	Datos.Five++
 }
-func updateE() {
-	Datos.Eight++
+func updateH() {
+	Datos.Hourly++
 	log.Println("Its been 8 hrsalready")
 
 }
@@ -54,24 +54,23 @@ func ServeHTTP(c *gin.Context) {
 	t, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		log.Println(err)
-		log.Println("dkjasbdk.")
 	}
 
 	Datos.Local = time.Now().Local()
 	items := struct {
-		Five  string
-		Eight string
-		Daily string
-		First string
-		Next  time.Time
-		Local time.Time
+		Five   string
+		Hourly string
+		Daily  string
+		First  string
+		Next   time.Time
+		Local  time.Time
 	}{
-		Five:  strconv.FormatInt(Datos.Five, 10),
-		Eight: strconv.FormatInt(Datos.Eight, 10),
-		Daily: strconv.FormatInt(Datos.Daily, 10),
-		First: strconv.FormatInt(Datos.First, 10),
-		Next:  Datos.Next,
-		Local: Datos.Local,
+		Five:   strconv.FormatInt(Datos.Five, 10),
+		Hourly: strconv.FormatInt(Datos.Hourly, 10),
+		Daily:  strconv.FormatInt(Datos.Daily, 10),
+		First:  strconv.FormatInt(Datos.First, 10),
+		Next:   Datos.Next,
+		Local:  Datos.Local,
 	}
 
 	err = t.ExecuteTemplate(w, "index.html", items)
@@ -109,8 +108,7 @@ func main() {
 	//r.Run(":" + os.Getenv("PORT"))
 	// Do jobs without params
 	gocron.Every(5).Minutes().Do(updateF)
-	//gocron.Every(1).Hour().Do(updateF)
-	gocron.Every(8).Hours().Do(updateE)
+	gocron.Every(1).Hour().Do(updateH)
 	gocron.Every(1).Day().Do(updateD)
 	// remove, clear and next_run
 	_, time := gocron.NextRun()
