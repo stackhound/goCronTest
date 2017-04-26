@@ -108,7 +108,7 @@ func main() {
 	go r.Run()
 	//r.Run(":" + os.Getenv("PORT"))
 	// Do jobs without params
-	gocron.Every(10).Minutes().Do(task)
+	gocron.Every(5).Minutes().Do(task)
 	gocron.Every(1).Hour().Do(updateH)
 	gocron.Every(8).Hours().Do(updateE)
 	gocron.Every(1).Day().Do(updateD)
