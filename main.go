@@ -24,7 +24,7 @@ type Data struct {
 //Datos a exportar
 var Datos Data
 
-func updateH() {
+func updateF() {
 	currentTime := time.Now().Local()
 	log.Println("Its one more hour, The Current time is ", currentTime.Format("02-01-2006"))
 	Datos.Hourly++
@@ -108,8 +108,8 @@ func main() {
 	go r.Run()
 	//r.Run(":" + os.Getenv("PORT"))
 	// Do jobs without params
-	gocron.Every(5).Minutes().Do(updateH)
-	//gocron.Every(1).Hour().Do(updateH)
+	gocron.Every(5).Minutes().Do(updateF)
+	//gocron.Every(1).Hour().Do(updateF)
 	gocron.Every(8).Hours().Do(updateE)
 	gocron.Every(1).Day().Do(updateD)
 	// remove, clear and next_run
