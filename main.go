@@ -40,7 +40,7 @@ func updateD() {
 	//This is updated daily so we check if it is our desired date every day
 	currentTime := time.Now().Local()
 	day := currentTime.Day()
-	if day == 21 {
+	if day == 11 {
 		Datos.First++
 		log.Println("This is the First Day of the Moth!")
 	}
@@ -104,8 +104,9 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		ServeHTTP(c)
 	})
-	go r.Run()
+	//go r.Run()
 	//r.Run(":" + os.Getenv("PORT"))
+	go r.Run(":8000")
 	// Do jobs without params
 	gocron.Every(5).Minutes().Do(updateF)
 	gocron.Every(1).Hour().Do(updateH)
