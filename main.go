@@ -37,9 +37,10 @@ func updateH() {
 }
 func updateD() {
 	fmt.Println("Another day under the sun")
+	currentTime := time.Now().Local()
+	fmt.Println("Current date is: ", currentTime.Format("02-01-2006"))
 	Datos.Daily++
 	//This is updated daily so we check if it is our desired date every day
-	currentTime := time.Now().Local()
 	day := currentTime.Day()
 	if day == 17 || day == 18 {
 		Datos.First++
@@ -109,8 +110,10 @@ func main() {
 	//go r.Run()
 	//r.Run(":" + os.Getenv("PORT"))
 	go r.Run(":8000")
-	updateD()
+	go updateD()
+	//gocron.Every(10).Seconds().Do(updateD)
 	// Do jobs without params
+	gocron.Every(2).Minutes().Do(updateD)
 	gocron.Every(5).Minutes().Do(updateF)
 	gocron.Every(1).Hour().Do(updateH)
 	gocron.Every(1).Day().Do(updateD)
