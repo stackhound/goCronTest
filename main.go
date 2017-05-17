@@ -1,8 +1,9 @@
 package main
 
+// CGO_ENABLED=0 go build main.go
 import (
+	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -26,29 +27,26 @@ var Datos Data
 
 func updateF() {
 	currentTime := time.Now().Local()
-	log.Println("Its one more hour, The Current time is ", currentTime.Format("02-01-2006"))
+	fmt.Println("Its one more hour, The Current time is ", currentTime.Format("02-01-2006"))
 	Datos.Five++
 }
 func updateH() {
 	Datos.Hourly++
-	log.Println("Its been 8 hrsalready")
+	fmt.Println("Its been 8 hrsalready")
 
 }
 func updateD() {
-	log.Println("Another day under the sun")
+	fmt.Println("Another day under the sun")
 	Datos.Daily++
 	//This is updated daily so we check if it is our desired date every day
 	currentTime := time.Now().Local()
 	day := currentTime.Day()
-<<<<<<< HEAD
-	if day == 17 {
-=======
-	if day == 11 {
->>>>>>> a20d5eba95f4409118fca073690009a0ca151ec3
+	if day == 17 || day == 18 {
 		Datos.First++
-		log.Println("This is the First Day of the Moth!")
+		fmt.Println("This is the :", day, ": Day of the Moth!")
 	}
 }
+
 func ServeHTTP(c *gin.Context) {
 	var w http.ResponseWriter = c.Writer
 
@@ -57,7 +55,7 @@ func ServeHTTP(c *gin.Context) {
 	//Parsing HTML
 	t, err := template.ParseFiles("templates/index.html")
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 	}
 
 	Datos.Local = time.Now().Local()
@@ -79,16 +77,16 @@ func ServeHTTP(c *gin.Context) {
 
 	err = t.ExecuteTemplate(w, "index.html", items)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 	}
 
 }
 func task() {
-	log.Println("I am runnning task.")
+	fmt.Println("I am runnning task.")
 }
 
 func taskWithParams(a int, b string) {
-	log.Println(a, b)
+	fmt.Println(a, b)
 }
 
 // Listen (just commented to avoid annoying vscode underlines)
@@ -97,7 +95,7 @@ func Listen() {
 	//http.Handle("/static/", fs)
 	//http.HandleFunc("/", ServeHTTP)
 	//port := os.Getenv("PORT")
-	//log.Println(port)
+	//fmt.Println(port)
 	//http.ListenAndServe(port, nil)
 }
 
@@ -111,15 +109,15 @@ func main() {
 	//go r.Run()
 	//r.Run(":" + os.Getenv("PORT"))
 	go r.Run(":8000")
+	updateD()
 	// Do jobs without params
-	//gocron.Every(30).Seconds().Do(updateD)
 	gocron.Every(5).Minutes().Do(updateF)
 	gocron.Every(1).Hour().Do(updateH)
 	gocron.Every(1).Day().Do(updateD)
 	// remove, clear and next_run
 	_, time := gocron.NextRun()
 	Datos.Next = time
-	log.Println(time)
+	fmt.Println(time)
 
 	// function Start start all the pending jobs
 	<-gocron.Start()
